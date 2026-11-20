@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>AI CHATBOT — ask anything, learn step by step</title>
+
+  <meta name="description" content="AI CHATBOT is an educational AI that answers your questions in maths, science, coding, history and more — explained step by step." />
+
+  <meta property="og:title" content="AI CHATBOT — ask anything, learn step by step" />
+  <meta property="og:description" content="An educational AI that explains maths, science, coding and more, step by step." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #202033;
+    }
+
+    .bg-hero {
+      background: linear-gradient(135deg, #f5f3ff, #ffffff);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1152px;
+      margin: auto;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #29234d;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: #6d5dfc;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .sign-in {
+      text-decoration: none;
+      color: #5145cd;
+      padding: 10px 18px;
+      border-radius: 10px;
+    }
+
+    .sign-in:hover {
+      background: #eeeaff;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      align-items: center;
+      gap: 48px;
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid #e5e1f5;
+      border-radius: 30px;
+      background: white;
+      color: #77738b;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .tag i {
+      color: #6d5dfc;
+    }
+
+    h1 {
+      font-size: 60px;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin: 25px 0;
+    }
+
+    .underline {
+      text-decoration: underline;
+      text-decoration-color: #a99bff;
+      text-decoration-thickness: 6px;
+      text-underline-offset: 8px;
+    }
+
+    .description {
+      max-width: 500px;
+      font-size: 18px;
+      line-height: 1.7;
+      color: #77738b;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 22px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: #6d5dfc;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #5848e5;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      border: 1px solid #ddd8ee;
+      color: #38334f;
+      background: white;
+    }
+
+    .btn-outline:hover {
+      background: #f3f0ff;
+    }
+
+    .preview {
+      position: relative;
+      padding: 25px;
+      border: 1px solid #e8e4f2;
+      border-radius: 25px;
+      background: white;
+      box-shadow: 0 15px 40px rgba(50, 40, 100, 0.10);
+    }
+
+    .preview-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .preview-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: #6d5dfc;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      animation: float 3s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    .preview-header h3 {
+      margin: 0 0 5px;
+      font-size: 19px;
+    }
+
+    .preview-header p {
+      margin: 0;
+      font-size: 14px;
+      color: #88839b;
+    }
+
+    .questions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .question {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px;
+      border: 1px solid #e9e6f2;
+      border-radius: 12px;
+      background: #faf9ff;
+      font-size: 14px;
+    }
+
+    .question i {
+      color: #6d5dfc;
+      width: 18px;
+    }
+
+    .floating-label {
+      position: absolute;
+      right: -12px;
+      bottom: -16px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      background: #ffe7a3;
+      font-weight: bold;
+      font-size: 14px;
+      transform: rotate(3deg);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    .features-section {
+      border-top: 1px solid #e9e5f2;
+      background: rgba(255,255,255,0.65);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+      padding-top: 65px;
+      padding-bottom: 65px;
+    }
+
+    .feature-icon {
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: #eeeaff;
+      color: #6d5dfc;
+      margin-bottom: 15px;
+    }
+
+    .feature h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .feature p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #77738b;
+    }
+
+    footer {
+      padding-top: 30px;
+      padding-bottom: 30px;
+      color: #88839b;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 45px;
+        gap: 45px;
+      }
+
+      h1 {
+        font-size: 43px;
+      }
+
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .floating-label {
+        right: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 38px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      .btn {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bg-hero">
+
+    <!-- Header -->
+    <header class="container">
+      <a href="/" class="brand">
+        <div class="brand-icon">✦</div>
+        <span>AI CHATBOT</span>
+      </a>
+
+      <a href="/auth" class="sign-in">Sign in</a>
+    </header>
+
+    <main>
+
+      <!-- Hero Section -->
+      <section class="hero container">
+
+        <div>
+          <span class="tag">
+            <i data-lucide="brain"></i>
+            Your AI study companion
+          </span>
+
+          <h1>
+            Ask anything.<br>
+            <span class="underline">Understand</span> everything.
+          </h1>
+
+          <p class="description">
+            AI CHATBOT answers your questions like a patient tutor —
+            maths, science, coding, history and languages, explained
+            one clear step at a time.
+          </p>
+
+          <div class="buttons">
+            <a href="/chat" class="btn btn-primary">
+              Start learning
+              <i data-lucide="arrow-right"></i>
+            </a>
+
+            <a href="/auth" class="btn btn-outline">
+              Create free account
+            </a>
+          </div>
+        </div>
+
+        <!-- Chat Preview -->
+        <div>
+          <div class="preview">
+
+            <div class="preview-header">
+              <div class="preview-logo">✦</div>
+
+              <div>
+                <h3>Hi, I'm your tutor!</h3>
+                <p>Try asking me…</p>
+              </div>
+            </div>
+
+            <div class="questions">
+
+              <div class="question">
+                <i data-lucide="book-open-check"></i>
+                Why is the sky blue?
+              </div>
+
+              <div class="question">
+                <i data-lucide="book-open-check"></i>
+                Solve 2x + 5 = 17
+              </div>
+
+              <div class="question">
+                <i data-lucide="book-open-check"></i>
+                What is a for loop?
+              </div>
+
+              <div class="question">
+                <i data-lucide="book-open-check"></i>
+                Summarise the French Revolution
+              </div>
+
+            </div>
+
+            <div class="floating-label">
+              Explained step by step ✏️
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Features Section -->
+      <section class="features-section">
+
+        <div class="features container">
+
+          <div class="feature">
+            <div class="feature-icon">
+              <i data-lucide="list-checks"></i>
+            </div>
+            <h2>Step-by-step answers</h2>
+            <p>
+              Every explanation is broken into clear steps
+              you can follow.
+            </p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">
+              <i data-lucide="sigma"></i>
+            </div>
+            <h2>Proper maths</h2>
+            <p>
+              Equations are written out neatly, with the
+              working shown.
+            </p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">
+              <i data-lucide="code-2"></i>
+            </div>
+            <h2>Runnable code</h2>
+            <p>
+              Programming examples come with explanations
+              line by line.
+            </p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">
+              <i data-lucide="history"></i>
+            </div>
+            <h2>Saved sessions</h2>
+            <p>
+              Your study chats are saved to your account,
+              on any device.
+            </p>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="container">
+      AI CHATBOT · Built for curious learners
+    </footer>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+
+</body>
+</html>
